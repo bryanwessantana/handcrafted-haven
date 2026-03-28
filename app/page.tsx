@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import ProductCard from '@/components/ProductCard';
 
 const featuredProducts = [
   { id: 1, name: 'Ceramic Serving Bowl', artisan: 'Elena Silva', price: '$45.00', category: 'Ceramics' },
@@ -8,54 +8,36 @@ const featuredProducts = [
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
-      {/* Hero Section - Dark Rich Black Background */}
-      <section className="bg-[#111827] text-[#F9FAFB] py-24 px-6 md:px-12 text-center">
+    <main className="min-h-screen bg-[#FDFDFD]">
+      {/* Hero Section */}
+      <section className="bg-[#111827] text-white pt-24 pb-28 px-6 text-center">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-6xl font-extrabold mb-6 tracking-tighter leading-tight">
-            Discover Uniquely<br /> Handcrafted Treasures
+          <h1 className="text-6xl md:text-7xl font-black mb-8 tracking-tighter italic">
+            Handcrafted <span className="text-[#4D7C0F] not-italic">Haven</span>
           </h1>
-          <p className="text-xl mb-10 text-gray-300 max-w-2xl mx-auto">
-            Connect directly with artisans from around the globe. Sustainable, passionate, and authentic.
+          <p className="text-lg text-gray-400 mb-10 max-w-xl mx-auto leading-relaxed">
+            Connecting Curitiba's finest artisans with people who value authentic, handmade treasures.
           </p>
-          <button className="bg-[#4D7C0F] hover:bg-[#3f650c] text-white px-10 py-4 rounded-full font-semibold text-lg transition-colors shadow-md">
-            Explore Collection
+          <button className="bg-[#4D7C0F] hover:bg-[#3f650c] text-white px-10 py-4 rounded-2xl font-bold transition-all shadow-lg shadow-[#4D7C0F]/20">
+            Explore Marketplace
           </button>
         </div>
       </section>
 
-      {/* Featured Products Grid */}
-      <section className="py-20 px-6 md:px-12 max-w-7xl mx-auto">
-        <div className="flex items-center justify-between mb-12">
-          <h2 className="text-4xl font-bold tracking-tight text-[#111827]">Featured Artisanal Goods</h2>
-          <a href="#" className="text-[#4D7C0F] font-medium hover:text-[#3f650c]">
-            View all →
-          </a>
+      <section className="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+          <div>
+            <h2 className="text-4xl font-black text-[#111827] tracking-tight">Weekly Featured</h2>
+            <p className="text-gray-400 font-medium">Unique pieces selected just for you.</p>
+          </div>
+          <button className="text-[#4D7C0F] font-bold border-b-2 border-[#4D7C0F]/20 hover:border-[#4D7C0F] transition-all pb-1 text-sm uppercase tracking-widest">
+            View All Collection
+          </button>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
           {featuredProducts.map((product) => (
-            <div key={product.id} className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow duration-300 group">
-              <div className="aspect-w-16 aspect-h-9 w-full overflow-hidden rounded-xl bg-gray-100 mb-6">
-                {/* Placeholder for Product Image */}
-                <div className="flex items-center justify-center h-48 text-gray-400">
-                  [{product.category} Image]
-                </div>
-              </div>
-              <p className="text-xs font-medium text-[#4D7C0F] uppercase tracking-widest mb-1">
-                {product.category}
-              </p>
-              <h3 className="text-xl font-semibold text-[#111827] mb-2 group-hover:text-[#4D7C0F] transition-colors">
-                {product.name}
-              </h3>
-              <p className="text-sm text-gray-500 mb-4">by {product.artisan}</p>
-              <div className="flex items-center justify-between mt-auto">
-                <span className="text-2xl font-bold text-[#111827]">{product.price}</span>
-                <button className="text-sm border border-[#111827] text-[#111827] px-4 py-2 rounded-md hover:bg-[#111827] hover:text-white transition-colors">
-                  View Details
-                </button>
-              </div>
-            </div>
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </section>
