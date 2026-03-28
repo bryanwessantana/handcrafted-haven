@@ -8,34 +8,38 @@ const featuredProducts = [
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#FDFDFD]">
+    <main className="min-h-screen bg-[#FDFDFD] antialiased">
       {/* Hero Section */}
-      <section className="bg-[#111827] text-white pt-24 pb-28 px-6 text-center">
+      <section className="bg-[#111827] py-24 px-6 text-center overflow-hidden">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-6xl md:text-7xl font-black mb-8 tracking-tighter italic">
-            Handcrafted <span className="text-[#4D7C0F] not-italic">Haven</span>
+          {/* H1 que já está funcionando */}
+          <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tighter italic text-[#F9FAFB] leading-tight">
+            Handcrafted <span className="text-[#65A30D] not-italic">Haven</span>
           </h1>
-          <p className="text-lg text-gray-400 mb-10 max-w-xl mx-auto leading-relaxed">
-            Connecting Curitiba's finest artisans with people who value authentic, handmade treasures.
+          
+          {/* P ajustado: usando text-gray-300 ou text-[#F9FAFB] direto */}
+          <p className="text-xl text-[#F9FAFB]/80 mb-10 max-w-2xl mx-auto leading-relaxed font-medium">
+            Connecting Curitiba`s finest artisans with people who value authentic, handmade treasures.
           </p>
-          <button className="bg-[#4D7C0F] hover:bg-[#3f650c] text-white px-10 py-4 rounded-2xl font-bold transition-all shadow-lg shadow-[#4D7C0F]/20">
-            Explore Marketplace
-          </button>
+          
+          <div className="flex justify-center">
+            <button className="bg-[#65A30D] hover:bg-[#4d7c0f] text-white px-10 py-4 rounded-2xl font-bold transition-all shadow-xl shadow-black/20 border-none outline-none">
+              Explore Marketplace
+            </button>
+          </div>
         </div>
       </section>
 
-      <section className="py-24 px-6 md:px-12 max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+      {/* Grid Section - Mantendo o estilo limpo abaixo */}
+      <section className="py-20 px-6 max-w-6xl mx-auto">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4 border-b border-gray-100 pb-8">
           <div>
-            <h2 className="text-4xl font-black text-[#111827] tracking-tight">Weekly Featured</h2>
-            <p className="text-gray-400 font-medium">Unique pieces selected just for you.</p>
+            <h2 className="text-3xl font-black text-[#111827] tracking-tight">Weekly Featured</h2>
+            <p className="text-gray-500 font-medium mt-1 text-sm italic">Unique pieces selected just for you.</p>
           </div>
-          <button className="text-[#4D7C0F] font-bold border-b-2 border-[#4D7C0F]/20 hover:border-[#4D7C0F] transition-all pb-1 text-sm uppercase tracking-widest">
-            View All Collection
-          </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 justify-items-center">
           {featuredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
