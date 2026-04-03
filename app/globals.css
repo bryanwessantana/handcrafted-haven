@@ -5,12 +5,39 @@
 :root {
   --background: #F9FAFB;
   --foreground: #111827;
+  --accent: #65A30D;
+  --dark: #0F172A;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-geist-sans), 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #65A30D;
+}
+
+/* Focus ring override */
+*:focus-visible {
+  outline: 2px solid #65A30D;
+  outline-offset: 2px;
 }
