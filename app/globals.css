@@ -1,12 +1,17 @@
-@tailwind base;
+﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #F9FAFB;
-  --foreground: #111827;
+  color-scheme: light;
+  --background: #F8FAFC;
+  --surface: #FFFFFF;
+  --foreground: #0F172A;
+  --muted: #64748B;
+  --border: rgba(15, 23, 42, 0.08);
   --accent: #65A30D;
-  --dark: #0F172A;
+  --accent-soft: rgba(101, 163, 13, 0.12);
+  --shadow: 0 30px 60px rgba(15, 23, 42, 0.08);
 }
 
 html {
@@ -14,30 +19,48 @@ html {
 }
 
 body {
+  min-height: 100vh;
+  margin: 0;
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-geist-sans), 'Inter', sans-serif;
+  font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #F1F5F9;
-}
-::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #65A30D;
+* {
+  box-sizing: border-box;
 }
 
-/* Focus ring override */
-*:focus-visible {
-  outline: 2px solid #65A30D;
-  outline-offset: 2px;
+img,
+svg {
+  display: block;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.focus:not(:focus-visible) {
+  outline: none;
 }

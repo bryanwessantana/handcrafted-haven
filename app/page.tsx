@@ -1,162 +1,151 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
-
-const allProducts = [
-  { id: 1, name: 'Ceramic Serving Bowl', artisan: 'Elena Silva', price: '$45.00', category: 'Ceramics' },
-  { id: 2, name: 'Hand-Carved Walnut Spoon', artisan: 'Marco Rossi', price: '$28.00', category: 'Woodwork' },
-  { id: 3, name: 'Organic Cotton Blanket', artisan: 'Sofia Chen', price: '$110.00', category: 'Textiles' },
-  { id: 4, name: 'Clay Flower Vase', artisan: 'Elena Silva', price: '$35.00', category: 'Ceramics' },
-  { id: 5, name: 'Oak Cutting Board', artisan: 'Marco Rossi', price: '$55.00', category: 'Woodwork' },
-  { id: 6, name: 'Embroidered Cushion', artisan: 'Sofia Chen', price: '$65.00', category: 'Textiles' },
-];
+import { categories, getProducts } from '@/lib/data';
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
 
-  const categories = ['All', 'Ceramics', 'Woodwork', 'Textiles'];
-
-  const filteredProducts = allProducts.filter(product => {
-    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
+  const allProducts = getProducts();
+  const filteredProducts = allProducts.filter((product) => {
+    const matchesSearch =
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.artisan.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
   return (
-    <>
-      {/* ── Hero Section ── */}
-      <section className="bg-[#0F172A] pt-20 pb-28 px-6 text-center relative overflow-hidden">
-        {/* Decorative background blobs */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute -top-20 -left-20 w-96 h-96 rounded-full bg-[#65A30D]/10 blur-3xl" />
-          <div className="absolute -bottom-20 -right-20 w-96 h-96 rounded-full bg-[#65A30D]/10 blur-3xl" />
-        </div>
-
-        <div className="max-w-4xl mx-auto relative z-10">
-          {/* Badge */}
-          <span className="inline-flex items-center gap-2 bg-[#65A30D]/15 text-[#65A30D] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-8 border border-[#65A30D]/30">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#65A30D] animate-pulse" />
-            Curitiba&apos;s Artisan Marketplace
-          </span>
-
-          <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tighter text-white leading-none">
-            Handcrafted{' '}
-            <span className="text-[#65A30D] italic">Haven</span>
-          </h1>
-
-          <p className="text-lg md:text-xl text-white/70 mb-10 max-w-2xl mx-auto font-medium leading-relaxed">
-            Discover unique treasures from Curitiba&apos;s finest artisans.
-            Every piece tells a story — find yours today.
+    <div className="min-h-screen bg-[color:var(--background)]">
+      <section className="relative overflow-hidden bg-[#0F172A] pt-24 pb-20 text-white">
+        <div className="absolute inset-x-0 top-0 h-72 bg-[radial-gradient(circle_at_top,_rgba(101,163,13,0.18),_transparent_55%)]" />
+        <div className="relative mx-auto max-w-6xl px-6 text-center">
+          <p className="text-sm font-semibold uppercase tracking-[0.35em] text-[#65A30D]">Curated marketplace</p>
+          <h1 className="mt-6 text-5xl font-black tracking-tight text-white sm:text-6xl">Curated pieces from Curitiba artisans.</h1>
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/80">
+            Discover handcrafted home goods, artisan stories, and filtered collections designed to celebrate local makers.
           </p>
 
-          {/* Stats row */}
-          <div className="flex justify-center gap-10 mb-12">
-            {[
-              { value: '6+', label: 'Products' },
-              { value: '3', label: 'Artisans' },
-              { value: '3', label: 'Categories' },
-            ].map(({ value, label }) => (
-              <div key={label} className="text-center">
-                <div className="text-2xl font-black text-white">{value}</div>
-                <div className="text-xs text-white/40 font-semibold uppercase tracking-widest">{label}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* Search Bar */}
-          <div className="max-w-lg mx-auto relative">
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
-            </span>
+          <div className="mx-auto mt-12 max-w-2xl">
+            <label htmlFor="search" className="sr-only">
+              Search products
+            </label>
             <input
+              id="search"
               type="text"
-              placeholder="Search unique products..."
-              className="w-full pl-12 pr-6 py-4 rounded-2xl bg-white text-gray-900 shadow-2xl focus:outline-none focus:ring-2 focus:ring-[#65A30D] transition-all text-sm font-medium"
-              onChange={(e) => setSearchTerm(e.target.value)}
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+              placeholder="Search products, artisans, or categories"
+              className="w-full rounded-[2rem] border border-white/20 bg-white/10 px-6 py-4 text-white placeholder:text-white/60 shadow-[0_25px_50px_-25px_rgba(0,0,0,0.4)] focus:border-[#65A30D] focus:outline-none focus:ring-2 focus:ring-[#65A30D]/40"
             />
           </div>
-        </div>
-      </section>
 
-      {/* ── Catalog Section ── */}
-      <section className="py-16 px-6 max-w-7xl mx-auto">
-        {/* Toolbar */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
-          <div>
-            <h2 className="text-2xl font-black text-[#111827] tracking-tight">All Products</h2>
-            <p className="text-sm text-gray-400 font-medium mt-0.5">
-              Showing <span className="text-[#65A30D] font-bold">{filteredProducts.length}</span> of {allProducts.length} products
-            </p>
-          </div>
-
-          {/* Category filters */}
-          <div className="flex gap-2 flex-wrap">
-            {categories.map(cat => (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-5 py-2 rounded-full text-xs font-bold transition-all whitespace-nowrap border ${
-                  selectedCategory === cat
-                    ? 'bg-[#65A30D] text-white border-[#65A30D] shadow-lg shadow-green-900/20'
-                    : 'bg-white text-gray-500 border-gray-200 hover:border-[#65A30D] hover:text-[#65A30D]'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Product Grid */}
-        {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-24 bg-white rounded-3xl border border-gray-100">
-            <div className="text-5xl mb-4">🔍</div>
-            <p className="text-gray-400 text-lg font-medium">No products found matching your criteria.</p>
-            <button
-              onClick={() => { setSearchTerm(''); setSelectedCategory('All'); }}
-              className="mt-4 text-[#65A30D] text-sm font-bold hover:underline"
+          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+            <Link
+              href="/artisans"
+              className="inline-flex items-center justify-center rounded-full bg-[#65A30D] px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-[#65A30D]/20 transition hover:bg-[#4d7c0f]"
             >
-              Clear filters
-            </button>
-          </div>
-        )}
-      </section>
-
-      {/* ── Featured Artisans Banner ── */}
-      <section className="bg-[#0F172A] py-16 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-black text-white tracking-tight mb-2">Meet Our Artisans</h2>
-            <p className="text-white/50 text-sm font-medium">The talented makers behind every piece</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {[
-              { name: 'Elena Silva', specialty: 'Ceramics', location: 'Santa Felicidade, Curitiba' },
-              { name: 'Marco Rossi', specialty: 'Woodwork', location: 'Paraná Forests' },
-              { name: 'Sofia Chen', specialty: 'Textiles', location: 'Curitiba, Paraná' },
-            ].map((artisan) => (
-              <div key={artisan.name} className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors text-center">
-                <div className="w-14 h-14 rounded-full bg-[#65A30D]/20 border border-[#65A30D]/30 flex items-center justify-center mx-auto mb-4">
-                  <span className="text-[#65A30D] font-black text-xl">{artisan.name[0]}</span>
-                </div>
-                <h3 className="text-white font-bold text-lg">{artisan.name}</h3>
-                <p className="text-[#65A30D] text-xs font-bold uppercase tracking-widest mt-1">{artisan.specialty}</p>
-                <p className="text-white/40 text-xs mt-2">{artisan.location}</p>
-              </div>
-            ))}
+              Browse Artisans
+            </Link>
+            <p className="text-sm text-white/70">{filteredProducts.length} pieces available to explore.</p>
           </div>
         </div>
       </section>
-    </>
+
+      <main className="mx-auto max-w-7xl px-6 py-16">
+        <div className="flex flex-col gap-10">
+          <section aria-labelledby="catalog-heading">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.35em] text-[#65A30D]">Product catalog</p>
+                <h2 id="catalog-heading" className="mt-3 text-4xl font-black text-[#111827]">
+                  A catalog built for discovery.
+                </h2>
+              </div>
+              <p className="text-sm font-semibold uppercase tracking-[0.35em] text-slate-500">{filteredProducts.length} items</p>
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  type="button"
+                  onClick={() => setSelectedCategory(category)}
+                  className={`rounded-full px-5 py-2 text-sm font-semibold transition ${
+                    selectedCategory === category
+                      ? 'bg-[#111827] text-white border border-[#111827]'
+                      : 'border border-slate-200 bg-white text-slate-600 hover:border-[#65A30D] hover:text-[#65A30D]'
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </section>
+
+          <section aria-labelledby="filter-heading">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <div>
+                <h3 id="filter-heading" className="text-2xl font-bold text-[#111827]">
+                  Filter by category or artisan name.
+                </h3>
+                <p className="mt-2 text-gray-600">Search connects you directly to the makers and their handcrafted collections.</p>
+              </div>
+            </div>
+
+            <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {filteredProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+
+            {filteredProducts.length === 0 && (
+              <div className="mt-16 rounded-[2rem] border border-slate-200 bg-white p-16 text-center shadow-sm">
+                <h3 className="text-2xl font-semibold text-slate-800">No matches found</h3>
+                <p className="mt-3 text-slate-500">Try a different search term, category, or explore our artisan profiles.</p>
+              </div>
+            )}
+          </section>
+
+          <section id="reviews" aria-labelledby="reviews-heading" className="rounded-[2rem] border border-slate-200 bg-white p-12 shadow-sm">
+            <div className="grid gap-8 lg:grid-cols-[1.3fr_0.7fr] lg:items-center">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.35em] text-[#65A30D]">Verified reviews</p>
+                <h2 id="reviews-heading" className="mt-4 text-4xl font-black text-[#111827]">
+                  Loved by customers and craft collectors alike.
+                </h2>
+                <p className="mt-4 max-w-2xl text-gray-600 leading-relaxed">
+                  Each review is written by a verified shopper who selected a piece from our artisan network.
+                </p>
+              </div>
+              <div className="grid gap-4">
+                <div className="rounded-[1.5rem] bg-[#F8FAFC] p-6">
+                  <p className="text-lg font-semibold text-[#111827]">“Exceptional quality and thoughtful design.”</p>
+                  <p className="mt-3 text-sm text-slate-500">— María, Curitiba</p>
+                </div>
+                <div className="rounded-[1.5rem] bg-[#F8FAFC] p-6">
+                  <p className="text-lg font-semibold text-[#111827]">“The artisan story made my purchase feel special.”</p>
+                  <p className="mt-3 text-sm text-slate-500">— Gabriel, São Paulo</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <footer className="border-t border-slate-200 bg-white py-12 px-6">
+        <div className="mx-auto flex max-w-7xl flex-col gap-6 text-sm text-slate-600 md:flex-row md:justify-between md:items-center">
+          <div className="font-semibold text-slate-900">Handcrafted Haven</div>
+          <p>Copyright © 2026. Built for artisan discovery and curated product stories.</p>
+          <div className="flex flex-wrap gap-4">
+            <a href="#" className="transition hover:text-[#65A30D]">Instagram</a>
+            <a href="#" className="transition hover:text-[#65A30D]">Privacy</a>
+          </div>
+        </div>
+      </footer>
+    </div>
   );
 }
