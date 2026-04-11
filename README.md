@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Handcrafted Haven
 
-## Getting Started
+Handcrafted Haven is a curated marketplace for Curitiba artisans, built with Next.js and Tailwind CSS. The site features:
 
-First, run the development server:
+- Navigation system with shared header links
+- Artisan profile pages and list views
+- Product catalog grid with filter and search
+- Product card UI and dynamic product detail pages
+- Customer review sections for products
+- Accessible markup, focus states, and screen reader support
+- Global theming with shared CSS variables
+- GitHub Actions CI pipeline for build and lint checks
+
+## Available Scripts
+
+In the project directory, run:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Production build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm run start
+```
 
-## Learn More
+### Lint
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run lint
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `app/` — Application routes and pages
+- `components/` — Reusable UI components
+- `lib/` — Shared product and artisan data helpers
+- `.github/workflows/ci.yml` — Deployment pipeline for GitHub Actions
 
-## Deploy on Vercel
+## Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This repository includes a GitHub Actions workflow that installs dependencies, runs lint, and builds the app on every push and pull request to `main`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+For production deployment, this app is ready for platforms such as Vercel or any container hosting service that supports Next.js.
